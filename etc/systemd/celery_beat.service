@@ -1,0 +1,18 @@
+[Unit]
+Description=Celery Beat
+After=network.target
+
+[Service]
+User={user}
+Group=www-data
+WorkingDirectory={project_dir}
+Restart=on-failure
+
+ExecStart={home}/{venv}/bin/celery beat \
+        -A {project} \
+        -S django \
+        -l INFO \
+        --logfile={logs_dir}/celery-beat.log
+
+[Install]
+WantedBy=celery-worker-01.service,celery-worker-02.service,celery-worker-03.service
