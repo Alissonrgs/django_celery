@@ -1,0 +1,13 @@
+[Unit]
+Description=Celery Flower Service
+After=network.target
+
+[Service]
+User={USER}
+Group={GROUP}
+WorkingDirectory={PROJECT_DIR}
+Restart=on-failure
+ExecStart={HOME}/{VENV}/bin/celery flower
+
+[Install]
+WantedBy=celery-beat.service

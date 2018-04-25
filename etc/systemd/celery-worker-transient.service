@@ -8,8 +8,8 @@ User={USER}
 Group={GROUP}
 WorkingDirectory={PROJECT_DIR}
 ExecStart={HOME}/{VENV}/bin/celery multi start worker-transient \
-    --concurrency=1
-    --queues transient
+    --concurrency=1 \
+    --queues transient \
     -O fair \
     --task-events \
     --prefetch-multiplier 1 \
@@ -21,8 +21,8 @@ ExecStart={HOME}/{VENV}/bin/celery multi start worker-transient \
 ExecStop={HOME}/{VENV}/bin/celery multi stopwait worker-transient \
     --pidfile={PID_DIR}/celery-worker-transient.pid
 ExecReload={HOME}/{VENV}/bin/celery multi restart worker-transient \
-    --concurrency=1
-    --queues default
+    --concurrency=1 \
+    --queues default \
     -O fair \
     --task-events \
     --prefetch-multiplier 1 \

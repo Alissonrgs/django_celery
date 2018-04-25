@@ -8,7 +8,7 @@ User={USER}
 Group={GROUP}
 WorkingDirectory={PROJECT_DIR}
 ExecStart={HOME}/{VENV}/bin/celery multi start worker-beat \
-    --queues beat
+    --queues beat \
     -O fair \
     --task-events \
     --prefetch-multiplier 2 \
@@ -21,7 +21,7 @@ ExecStart={HOME}/{VENV}/bin/celery multi start worker-beat \
 ExecStop={HOME}/{VENV}/bin/celery multi stopwait worker-beat \
     --pidfile={PID_DIR}/celery-worker-beat.pid
 ExecReload={HOME}/{VENV}/bin/celery multi restart worker-beat \
-    --queues default
+    --queues default \
     -O fair \
     --task-events \
     --prefetch-multiplier 2 \

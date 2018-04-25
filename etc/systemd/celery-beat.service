@@ -7,11 +7,11 @@ User={USER}
 Group={GROUP}
 WorkingDirectory={PROJECT_DIR}
 Restart=on-failure
-
 ExecStart={HOME}/{VENV}/bin/celery beat \
     -S django \
     --logfile={LOGS_DIR}/celery-beat.log \
-    --loginfo INFO
+    --loginfo INFO \
+    --pidfile={PID_DIR}/ccelery-beat.pid
 
 [Install]
 WantedBy=celery-worker-default.service,celery-worker-beat.service,celery-worker-transient.service

@@ -37,17 +37,11 @@ DEFAULT_EXCHANGE = Exchange('default')
 BEAT_EXCHANGE = Exchange('beat')
 TRANSIENT_EXCHANGE = Exchange('transient', delivery_mode=1)
 
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
-CELERY_RESULT_PERSISTENT = True
-CELERY_TASK_DEFAULT_EXCHANGE = 'default'
-CELERY_TASK_DEFAULT_QUEUE = 'default'
-CELERY_TASK_DEFAULT_ROUTING_KEY = 'default'
 CELERY_TASK_QUEUES = [
     Queue(
         'default',
         DEFAULT_EXCHANGE,
-        routing_key='deafult',
+        routing_key='default',
         queue_arguments={'x-max-priority': 10}
     ),
     Queue(
@@ -62,6 +56,13 @@ CELERY_TASK_QUEUES = [
         routing_key='transient'
     )
 ]
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_ACKS_LATE = True
+CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
+CELERY_RESULT_PERSISTENT = True
+CELERY_TASK_DEFAULT_EXCHANGE = 'default'
+CELERY_TASK_DEFAULT_QUEUE = 'default'
+CELERY_TASK_DEFAULT_ROUTING_KEY = 'default'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TASK_TRACK_STARTED = True
 
