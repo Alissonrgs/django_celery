@@ -20,18 +20,22 @@ transient_exchange = Exchange('transient', delivery_mode=1)
 
 app.conf.task_queues = [
     Queue(
+        'default',
+        default_exchange,
+        routing_key='deafult',
+        queue_arguments={'x-max-priority': 10}
+    ),
+    Queue(
         'beat',
         beat_exchange,
         routing_key='beat',
         queue_arguments={'x-max-priority': 10}
     ),
     Queue(
-        'default',
-        default_exchange,
-        routing_key='deafult',
-        queue_arguments={'x-max-priority': 10}
-    ),
-    Queue('transient', transient_exchange, routing_key='transient')
+        'transient',
+        transient_exchange,
+        routing_key='transient'
+    )
 ]
 app.conf.task_default_queue = 'default'
 app.conf.task_default_exchange = 'default'

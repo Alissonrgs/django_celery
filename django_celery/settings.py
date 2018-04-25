@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 from __future__ import absolute_import, unicode_literals
 import os
+from celery.schedules import crontab
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,7 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Celery settings
+# Celery Worker Settings
 
 # CELERY_IGNORE_RESULT = False
 # CELERY_RESULT_SERIALIZER = 'json'
@@ -42,6 +43,19 @@ ALLOWED_HOSTS = []
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 CELERY_TASK_SERIALIZER = 'json'
+
+# Celery Beat Settings
+
+CELERYBEAT_SCHEDULE = {
+    'periodic-task-01': {
+        'task': 'app.tasks.periodic_task_01',
+        'schedule': crontab(minute='*/1')
+    },
+    'periodic-task-02': {
+        'task': 'app.tasks.periodic_task_02',
+        'schedule': crontab(minute='*/2')
+    }
+}
 
 
 # Application definition
