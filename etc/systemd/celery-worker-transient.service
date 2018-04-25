@@ -1,0 +1,36 @@
+[Unit]
+Description=Celery Worker Transient Service
+After=network.target
+
+[Service]
+Type=forking
+User={USER}
+Group={GROUP}
+WorkingDirectory={PROJECT_DIR}
+ExecStart={HOME}/{VENV}/bin/celery multi start worker-transient \
+    --concurrency=1
+    --queues transient
+    -O fair \
+    --task-events \
+    --prefetch-multiplier 1 \
+    --max-tasks-per-child 1 \
+    --max-memory-per-child 2000000 \
+    --logfile={LOGS_DIR}/celery-worker-transient.log \
+    --loglevel INFO \
+    --pidfile={PID_DIR}/celery-worker-transient.pid
+ExecStop={HOME}/{VENV}/bin/celery multi stopwait worker-transient \
+    --pidfile={PID_DIR}/celery-worker-transient.pid
+ExecReload={HOME}/{VENV}/bin/celery multi restart worker-transient \
+    --concurrency=1
+    --queues default
+    -O fair \
+    --task-events \
+    --prefetch-multiplier 1 \
+    --max-tasks-per-child 1 \
+    --max-memory-per-child 2000000 \
+    --logfile={LOGS_DIR}/celery-worker-transient.log \
+    --loglevel INFO \
+    --pidfile={PID_DIR}/celery-worker-transient.pid
+
+[Install]
+WantedBy=multi-user.target

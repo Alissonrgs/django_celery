@@ -1,0 +1,36 @@
+[Unit]
+Description=Celery Worker Default Service
+After=network.target
+
+[Service]
+Type=forking
+User={USER}
+Group={GROUP}
+WorkingDirectory={PROJECT_DIR}
+ExecStart={HOME}/{VENV}/bin/celery multi start worker-default \
+    --queues default
+    -O fair \
+    --task-events \
+    --prefetch-multiplier 4 \
+    --max-tasks-per-child 4 \
+    --max-memory-per-child 2000000 \
+    --autoscale 4,2 \
+    --logfile={LOGS_DIR}/celery-worker-default.log \
+    --loglevel INFO \
+    --pidfile={PID_DIR}/celery-worker-default.pid
+ExecStop={HOME}/{VENV}/bin/celery multi stopwait worker-default \
+    --pidfile={PID_DIR}/celery-worker-default.pid
+ExecReload={HOME}/{VENV}/bin/celery multi restart worker-default \
+    --queues default
+    -O fair \
+    --task-events \
+    --prefetch-multiplier 4 \
+    --max-tasks-per-child 4 \
+    --max-memory-per-child 2000000 \
+    --autoscale 4,2 \
+    --logfile={LOGS_DIR}/celery-worker-default.log \
+    --loglevel INFO \
+    --pidfile={PID_DIR}/celery-worker-default.pid
+
+[Install]
+WantedBy=multi-user.target
