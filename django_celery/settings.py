@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 from __future__ import absolute_import, unicode_literals
 import os
 from celery.schedules import crontab
+from kombu import Exchange, Queue
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -32,17 +33,38 @@ ALLOWED_HOSTS = []
 
 # Celery Worker Settings
 
-# CELERY_IGNORE_RESULT = False
-# CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_SEND_TASK_ERROR_EMAILS = True
-# CELERY_RESULT_PERSISTENT = True
-# CELERY_TASK_ALWAYS_EAGER = False
-# CELERY_TASK_TRACK_STARTED = True
+DEFAULT_EXCHANGE = Exchange('default')
+BEAT_EXCHANGE = Exchange('beat')
+TRANSIENT_EXCHANGE = Exchange('transient', delivery_mode=1)
 
-# CELERY_BROKER_URL = 'amqp://guest:guest@localhost//'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
+CELERY_RESULT_PERSISTENT = True
+CELERY_TASK_DEFAULT_EXCHANGE = 'default'
+CELERY_TASK_DEFAULT_QUEUE = 'default'
+CELERY_TASK_DEFAULT_ROUTING_KEY = 'default'
+CELERY_TASK_QUEUES = [
+    Queue(
+        'default',
+        DEFAULT_EXCHANGE,
+        routing_key='deafult',
+        queue_arguments={'x-max-priority': 10}
+    ),
+    Queue(
+        'beat',
+        BEAT_EXCHANGE,
+        routing_key='beat',
+        queue_arguments={'x-max-priority': 10}
+    ),
+    Queue(
+        'transient',
+        TRANSIENT_EXCHANGE,
+        routing_key='transient'
+    )
+]
 CELERY_TASK_SERIALIZER = 'json'
+CELERY_TASK_TRACK_STARTED = True
+
 
 # Celery Beat Settings
 
