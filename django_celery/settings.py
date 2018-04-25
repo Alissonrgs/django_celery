@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
+from __future__ import absolute_import, unicode_literals
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -28,15 +29,34 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# Celery settings
+
+# CELERY_IGNORE_RESULT = False
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_SEND_TASK_ERROR_EMAILS = True
+# CELERY_RESULT_PERSISTENT = True
+# CELERY_TASK_ALWAYS_EAGER = False
+# CELERY_TASK_TRACK_STARTED = True
+
+# CELERY_BROKER_URL = 'amqp://guest:guest@localhost//'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
+CELERY_TASK_SERIALIZER = 'json'
+
+
 # Application definition
 
 INSTALLED_APPS = [
+    'app.apps.AppConfig',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
