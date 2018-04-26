@@ -8,7 +8,7 @@ User={USER}
 Group={GROUP}
 WorkingDirectory={PROJECT_DIR}
 ExecStart={HOME}/{VENV}/bin/celery multi start worker-beat \
-    -A {PROJECT}
+    -A {PROJECT} \
     --queues beat \
     -O fair \
     --task-events \
