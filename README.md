@@ -1,7 +1,5 @@
-## django_celery
-A simple project to learn how to set Celery, Celery and Flower on a server and learn how to optimize tasks and queues.
-
 ### Description
+A simple project to learn how to set Celery, Celery and Flower on a server and learn how to optimize tasks and queues.
 In this project I set up the celery with 2 priority queues and a transient queue, for standard tasks, for periodic tasks, 
 and for tasks that do not need persistence.
 
