@@ -2,37 +2,46 @@ from __future__ import absolute_import, unicode_literals
 import time
 from celery import shared_task
 
+MIN = 60
+
+
+@shared_task(priority=0)
+def task_01():
+    print("TASK 01 (priority=0) - Started")
+    time.delay(30)
+    print("TASK 01 (priority=0) - Finished")
+
 
 @shared_task(priority=5)
-def task_01():
-    print("TASK 01 - Started")
-    time.delay(30)
-    print("TASK 01 - Finished")
+def task_02():
+    print("TASK 02 (priority=5) - Started")
+    time.delay(1 * MIN)
+    print("TASK 02 (priority=5) - Finished")
 
 
 @shared_task(priority=10)
-def task_02():
-    print("TASK 02 - Started")
-    time.delay(180)
-    print("TASK 02 - Finished")
+def task_03():
+    print("TASK 03 (priority=10) - Started")
+    time.delay(2 * MIN)
+    print("TASK 03 (priority=10) - Finished")
 
 
-@shared_task(priority=5)
+@shared_task(queue="beat", priority=0)
 def periodic_task_01():
-    print("PERIODIC TASK 01 - Started")
-    time.delay(60)
-    print("PERIODIC TASK 01 - Finished")
+    print("PERIODIC TASK 01 (priority=0) - Started")
+    time.delay(1 * MIN)
+    print("PERIODIC TASK 01 (priority=0) - Finished")
 
 
-@shared_task(priority=5)
+@shared_task(queue="beat", priority=10)
 def periodic_task_02():
-    print("PERIODIC TASK 02 - Started")
-    time.delay(60)
-    print("PERIODIC TASK 02 - Finished")
+    print("PERIODIC TASK 02 (priority=10) - Started")
+    time.delay(1 * MIN)
+    print("PERIODIC TASK 02 (priority=10) - Finished")
 
 
 @shared_task(queue="transient")
 def transient_task_01():
-    print("TRANSIENT TASK 01 - Started")
-    time.delay(30)
-    print("TRANSIENT TASK 01 - Finished")
+    print("TRANSIENT TASK 01 (priority=10) - Started")
+    time.delay(5 * MIN)
+    print("TRANSIENT TASK 01 (priority=10) - Finished")

@@ -33,15 +33,15 @@ ALLOWED_HOSTS = []
 
 # Celery Worker Settings
 
-DEFAULT_EXCHANGE = Exchange('default')
+NORMAL_EXCHANGE = Exchange('normal')
 BEAT_EXCHANGE = Exchange('beat')
 TRANSIENT_EXCHANGE = Exchange('transient', delivery_mode=1)
 
 CELERY_TASK_QUEUES = [
     Queue(
-        'default',
-        DEFAULT_EXCHANGE,
-        routing_key='default',
+        'normal',
+        NORMAL_EXCHANGE,
+        routing_key='normal',
         queue_arguments={'x-max-priority': 10}
     ),
     Queue(
@@ -60,9 +60,9 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_ACKS_LATE = True
 CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 CELERY_RESULT_PERSISTENT = True
-CELERY_TASK_DEFAULT_EXCHANGE = 'default'
-CELERY_TASK_DEFAULT_QUEUE = 'default'
-CELERY_TASK_DEFAULT_ROUTING_KEY = 'default'
+CELERY_TASK_DEFAULT_EXCHANGE = 'normal'
+CELERY_TASK_DEFAULT_QUEUE = 'normal'
+CELERY_TASK_DEFAULT_ROUTING_KEY = 'normal'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TASK_TRACK_STARTED = True
 
@@ -93,7 +93,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'django_celery_beat'
+    'django_celery_beat',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
