@@ -7,7 +7,8 @@ User={USER}
 Group={GROUP}
 WorkingDirectory={PROJECT_DIR}
 Restart=on-failure
-ExecStart={HOME}/{VENV}/bin/celery flower
+ExecStart={HOME}/{VENV}/bin/celery flower \
+    -A {PROJECT}
 
 [Install]
 WantedBy=celery-beat.service

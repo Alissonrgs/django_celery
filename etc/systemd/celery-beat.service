@@ -8,6 +8,7 @@ Group={GROUP}
 WorkingDirectory={PROJECT_DIR}
 Restart=on-failure
 ExecStart={HOME}/{VENV}/bin/celery beat \
+    -A {PROJECT} \
     -S django \
     --logfile={LOGS_DIR}/celery-beat.log \
     --loginfo INFO \

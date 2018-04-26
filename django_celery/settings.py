@@ -42,13 +42,13 @@ CELERY_TASK_QUEUES = [
         'normal',
         NORMAL_EXCHANGE,
         routing_key='normal',
-        queue_arguments={'x-max-priority': 10}
+        queue_arguments={'maxPriority': 10}
     ),
     Queue(
         'beat',
         BEAT_EXCHANGE,
         routing_key='beat',
-        queue_arguments={'x-max-priority': 10}
+        queue_arguments={'maxPriority': 10}
     ),
     Queue(
         'transient',
@@ -58,8 +58,8 @@ CELERY_TASK_QUEUES = [
 ]
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_ACKS_LATE = True
-CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
-CELERY_RESULT_PERSISTENT = True
+# CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
+# CELERY_RESULT_PERSISTENT = True
 CELERY_TASK_DEFAULT_EXCHANGE = 'normal'
 CELERY_TASK_DEFAULT_QUEUE = 'normal'
 CELERY_TASK_DEFAULT_ROUTING_KEY = 'normal'

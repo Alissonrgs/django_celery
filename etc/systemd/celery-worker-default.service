@@ -8,6 +8,7 @@ User={USER}
 Group={GROUP}
 WorkingDirectory={PROJECT_DIR}
 ExecStart={HOME}/{VENV}/bin/celery multi start worker-default \
+    -A {PROJECT}
     --queues default \
     -O fair \
     --task-events \
@@ -21,6 +22,7 @@ ExecStart={HOME}/{VENV}/bin/celery multi start worker-default \
 ExecStop={HOME}/{VENV}/bin/celery multi stopwait worker-default \
     --pidfile={PID_DIR}/celery-worker-default.pid
 ExecReload={HOME}/{VENV}/bin/celery multi restart worker-default \
+    -A {PROJECT}
     --queues default \
     -O fair \
     --task-events \

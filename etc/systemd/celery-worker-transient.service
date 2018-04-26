@@ -8,6 +8,7 @@ User={USER}
 Group={GROUP}
 WorkingDirectory={PROJECT_DIR}
 ExecStart={HOME}/{VENV}/bin/celery multi start worker-transient \
+    -A {PROJECT} \
     --concurrency=1 \
     --queues transient \
     -O fair \
@@ -21,6 +22,7 @@ ExecStart={HOME}/{VENV}/bin/celery multi start worker-transient \
 ExecStop={HOME}/{VENV}/bin/celery multi stopwait worker-transient \
     --pidfile={PID_DIR}/celery-worker-transient.pid
 ExecReload={HOME}/{VENV}/bin/celery multi restart worker-transient \
+    -A {PROJECT} \
     --concurrency=1 \
     --queues default \
     -O fair \
