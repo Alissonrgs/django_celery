@@ -6,13 +6,13 @@ import tempfile
 from fabric.api import cd, env, execute, prefix, put, run, sudo, task
 from fabric.contrib.files import exists
 
-GROUP = 'www-data'
+GROUP = 'ubuntu'
 LOGS_DIR = 'logs'
 PID_DIR = 'pid'
 PROJECT_NAME = 'django_celery'
 PROJECT_DIR = '$HOME/%s' % PROJECT_NAME
 REPOSITORY = 'https://github.com/Alissonrgs/django_celery.git'
-VENV_NAME = '.venv'
+VENV_NAME = 'venv'
 VENV_DIR = '$HOME/%s' % VENV_NAME
 
 env.hosts = ['USER@HOST:PORT']
@@ -109,7 +109,7 @@ def restart_systemd():
 
 @task
 def setup():
-    sudo('apt update && apt install -y virtualenv')
+    sudo('apt update && apt install -y git rabbitmq-server virtualenv')
 
     if exists(VENV_DIR):
         print("%s exists!" % VENV_DIR)
