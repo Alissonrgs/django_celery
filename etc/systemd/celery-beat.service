@@ -12,8 +12,8 @@ ExecStart={VENV_DIR}/bin/celery beat \
     -A {PROJECT_NAME} \
     -S django \
     --logfile={LOGS_DIR}/celery-beat.log \
-    --loglevel INFO \
+    --loglevel=INFO \
     --pidfile={PID_DIR}/celery-beat.pid
 
 [Install]
-WantedBy=celery-worker-default.service,celery-worker-beat.service,celery-worker-transient.service
+WantedBy=celery-worker-beat.service

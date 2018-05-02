@@ -11,14 +11,14 @@ WorkingDirectory={PROJECT_DIR}
 ExecStart={VENV_DIR}/bin/celery multi start worker-transient \
     -A {PROJECT_NAME} \
     --concurrency=1 \
-    --queues transient \
+    --queues=transient \
     -O fair \
     --task-events \
-    --prefetch-multiplier 1 \
-    --max-tasks-per-child 1 \
-    --max-memory-per-child 500000 \
+    --prefetch-multiplier=1 \
+    --max-tasks-per-child=1 \
+    --max-memory-per-child=100000 \
     --logfile={LOGS_DIR}/celery-worker-transient.log \
-    --loglevel INFO \
+    --loglevel=INFO \
     --pidfile={PID_DIR}/celery-worker-transient.pid
 
 ExecStop={VENV_DIR}/bin/celery multi stopwait worker-transient \
@@ -27,14 +27,14 @@ ExecStop={VENV_DIR}/bin/celery multi stopwait worker-transient \
 ExecReload={VENV_DIR}/bin/celery multi restart worker-transient \
     -A {PROJECT_NAME} \
     --concurrency=1 \
-    --queues default \
+    --queues=transient \
     -O fair \
     --task-events \
-    --prefetch-multiplier 1 \
-    --max-tasks-per-child 1 \
-    --max-memory-per-child 500000 \
+    --prefetch-multiplier=1 \
+    --max-tasks-per-child=1 \
+    --max-memory-per-child=100000 \
     --logfile={LOGS_DIR}/celery-worker-transient.log \
-    --loglevel INFO \
+    --loglevel=INFO \
     --pidfile={PID_DIR}/celery-worker-transient.pid
 
 [Install]

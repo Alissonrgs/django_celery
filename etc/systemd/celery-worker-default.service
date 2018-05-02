@@ -1,5 +1,5 @@
 [Unit]
-Description=Celery Worker Default Service
+Description=Celery Worker Normal Service
 After=network.target
 
 [Service]
@@ -8,34 +8,34 @@ User={USER}
 Group={GROUP}
 WorkingDirectory={PROJECT_DIR}
 
-ExecStart={VENV_DIR}/bin/celery multi start worker-default \
+ExecStart={VENV_DIR}/bin/celery multi start worker-normal \
     -A {PROJECT_NAME} \
-    --queues default \
+    --queues=normal \
     -O fair \
     --task-events \
-    --prefetch-multiplier 4 \
-    --max-tasks-per-child 4 \
-    --max-memory-per-child 500000 \
-    --autoscale 4,2 \
-    --logfile={LOGS_DIR}/celery-worker-default.log \
-    --loglevel INFO \
-    --pidfile={PID_DIR}/celery-worker-default.pid
+    --prefetch-multiplier=4 \
+    --max-tasks-per-child=4 \
+    --max-memory-per-child=100000 \
+    --autoscale=4,2 \
+    --logfile={LOGS_DIR}/celery-worker-normal.log \
+    --loglevel=INFO \
+    --pidfile={PID_DIR}/celery-worker-normal.pid
 
-ExecStop={VENV_DIR}/bin/celery multi stopwait worker-default \
-    --pidfile={PID_DIR}/celery-worker-default.pid
+ExecStop={VENV_DIR}/bin/celery multi stopwait worker-normal \
+    --pidfile={PID_DIR}/celery-worker-normal.pid
 
-ExecReload={VENV_DIR}/bin/celery multi restart worker-default \
+ExecReload={VENV_DIR}/bin/celery multi restart worker-normal \
     -A {PROJECT_NAME} \
-    --queues default \
+    --queues=normal \
     -O fair \
     --task-events \
-    --prefetch-multiplier 4 \
-    --max-tasks-per-child 4 \
-    --max-memory-per-child 500000 \
-    --autoscale 4,2 \
-    --logfile={LOGS_DIR}/celery-worker-default.log \
-    --loglevel INFO \
-    --pidfile={PID_DIR}/celery-worker-default.pid
+    --prefetch-multiplier=4 \
+    --max-tasks-per-child=4 \
+    --max-memory-per-child=100000 \
+    --autoscale=4,2 \
+    --logfile={LOGS_DIR}/celery-worker-normal.log \
+    --loglevel=INFO \
+    --pidfile={PID_DIR}/celery-worker-normal.pid
 
 [Install]
 WantedBy=multi-user.target
