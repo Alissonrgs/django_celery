@@ -7,12 +7,13 @@ from fabric.api import cd, env, execute, prefix, put, run, sudo, task
 from fabric.contrib.files import exists
 
 GROUP = 'www-data'
-LOGS_DIR = '$HOME/logs'
-PID_DIR = '$HOME/pid'
+LOGS_DIR = 'logs'
+PID_DIR = 'pid'
 PROJECT_NAME = 'django_celery'
 PROJECT_DIR = '$HOME/%s' % PROJECT_NAME
 REPOSITORY = 'https://github.com/Alissonrgs/django_celery.git'
-VENV_DIR = '$HOME/.venv'
+VENV_NAME = '.venv'
+VENV_DIR = '$HOME/%s' % VENV_NAME
 
 env.hosts = ['USER@HOST:PORT']
 env.password = 'password'
@@ -23,17 +24,23 @@ def user():
     return run('whoami').stdout.strip()
 
 
+def home():
+    "Get remote user's home folder"
+    return run('echo $HOME').stdout.strip()
+
+
 def get_service_context():
     USER = user()
+    HOME = home()
 
     return {
         'USER': USER,
         'GROUP': GROUP,
-        'LOGS_DIR': LOGS_DIR,
-        'PID_DIR': PID_DIR,
+        'LOGS_DIR': os.path.join(HOMO, LOGS_DIR),
+        'PID_DIR': os.path.join(HOME, PID_DIR),
+        'PROJECT_DIR': os.path.join(HOME, PROJECT_NAME)
         'PROJECT_NAME': PROJECT_NAME,
-        'PROJECT_DIR': PROJECT_DIR,
-        'VENV_DIR': VENV_DIR
+        'VENV_DIR': os.path.join(HOME, VENV_NAME)
     }
 
 
