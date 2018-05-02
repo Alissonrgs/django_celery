@@ -55,7 +55,11 @@ def update_service_file(service, context):
 @task(name='update-service-systemd')
 def update_service_systemd(**kwargs):
     """Create or update service files"""
+<<<<<<< HEAD
     context = get_service_context()
+=======
+    context = get_systemd_context()
+>>>>>>> a794fe412df78d673ea21b7b2052bb162d172460
     context.update(kwargs)
 
     service_list = os.listdir('etc/systemd')
@@ -102,6 +106,7 @@ def restart_systemd():
 
 @task
 def setup():
+<<<<<<< HEAD
     sudo('apt update && apt install -y virtualenv')
 
     if exists(VENV_DIR):
@@ -117,15 +122,29 @@ def setup():
     with cd(PROJECT_DIR), prefix('source %s/bin/activate' % VENV_DIR):
         run('git pull origin master')
         run('pip install -r requirements/prod.txt')
+=======
+    sudo('apt update && apt install git virtualenv')
+    run('virtualenv .venv')
+    run('git clone %s' % REPOSITORY)
+    with cd(PROJECT_DIR), prefix('source %s/bin/activate' % PROJECT_DIR):
+        run('git pull origin master')
+        run('pip install -r requirements.txt')
+>>>>>>> a794fe412df78d673ea21b7b2052bb162d172460
         run('./manage.py migrate')
     execute(update_service_systemd)
 
 
 @task
 def deploy():
+<<<<<<< HEAD
     with cd(PROJECT_DIR), prefix('source %s/bin/activate' % VENV_DIR):
         run('git pull origin master')
         run('pip install -r requirements/prod.txt')
+=======
+    with cd(PROJECT_DIR), prefix('source %s/bin/activate' % PROJECT_DIR):
+        run('git pull origin master')
+        run('pip install -r requirements.txt')
+>>>>>>> a794fe412df78d673ea21b7b2052bb162d172460
         run("./manage.py migrate")
     execute(update_service_systemd)
     execute(restart_systemd)
