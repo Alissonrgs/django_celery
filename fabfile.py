@@ -38,8 +38,8 @@ def get_service_context():
         'GROUP': GROUP,
         'LOGS_DIR': os.path.join(HOMO, LOGS_DIR),
         'PID_DIR': os.path.join(HOME, PID_DIR),
-        'PROJECT_DIR': os.path.join(HOME, PROJECT_NAME)
         'PROJECT_NAME': PROJECT_NAME,
+        'PROJECT_DIR': os.path.join(HOME, PROJECT_NAME),
         'VENV_DIR': os.path.join(HOME, VENV_NAME)
     }
 
