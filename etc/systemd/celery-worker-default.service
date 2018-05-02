@@ -7,28 +7,31 @@ Type=forking
 User={USER}
 Group={GROUP}
 WorkingDirectory={PROJECT_DIR}
-ExecStart={HOME}/{VENV}/bin/celery multi start worker-default \
-    -A {PROJECT} \
+
+ExecStart={VENV_DIR}/bin/celery multi start worker-default \
+    -A {PROJECT_NAME} \
     --queues default \
     -O fair \
     --task-events \
     --prefetch-multiplier 4 \
     --max-tasks-per-child 4 \
-    --max-memory-per-child 2000000 \
+    --max-memory-per-child 500000 \
     --autoscale 4,2 \
     --logfile={LOGS_DIR}/celery-worker-default.log \
     --loglevel INFO \
     --pidfile={PID_DIR}/celery-worker-default.pid
-ExecStop={HOME}/{VENV}/bin/celery multi stopwait worker-default \
+
+ExecStop={VENV_DIR}/bin/celery multi stopwait worker-default \
     --pidfile={PID_DIR}/celery-worker-default.pid
-ExecReload={HOME}/{VENV}/bin/celery multi restart worker-default \
-    -A {PROJECT} \
+
+ExecReload={VENV_DIR}/bin/celery multi restart worker-default \
+    -A {PROJECT_NAME} \
     --queues default \
     -O fair \
     --task-events \
     --prefetch-multiplier 4 \
     --max-tasks-per-child 4 \
-    --max-memory-per-child 2000000 \
+    --max-memory-per-child 500000 \
     --autoscale 4,2 \
     --logfile={LOGS_DIR}/celery-worker-default.log \
     --loglevel INFO \

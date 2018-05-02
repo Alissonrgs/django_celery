@@ -7,29 +7,32 @@ Type=forking
 User={USER}
 Group={GROUP}
 WorkingDirectory={PROJECT_DIR}
-ExecStart={HOME}/{VENV}/bin/celery multi start worker-transient \
-    -A {PROJECT} \
+
+ExecStart={VENV_DIR}/bin/celery multi start worker-transient \
+    -A {PROJECT_NAME} \
     --concurrency=1 \
     --queues transient \
     -O fair \
     --task-events \
     --prefetch-multiplier 1 \
     --max-tasks-per-child 1 \
-    --max-memory-per-child 2000000 \
+    --max-memory-per-child 500000 \
     --logfile={LOGS_DIR}/celery-worker-transient.log \
     --loglevel INFO \
     --pidfile={PID_DIR}/celery-worker-transient.pid
-ExecStop={HOME}/{VENV}/bin/celery multi stopwait worker-transient \
+
+ExecStop={VENV_DIR}/bin/celery multi stopwait worker-transient \
     --pidfile={PID_DIR}/celery-worker-transient.pid
-ExecReload={HOME}/{VENV}/bin/celery multi restart worker-transient \
-    -A {PROJECT} \
+
+ExecReload={VENV_DIR}/bin/celery multi restart worker-transient \
+    -A {PROJECT_NAME} \
     --concurrency=1 \
     --queues default \
     -O fair \
     --task-events \
     --prefetch-multiplier 1 \
     --max-tasks-per-child 1 \
-    --max-memory-per-child 2000000 \
+    --max-memory-per-child 500000 \
     --logfile={LOGS_DIR}/celery-worker-transient.log \
     --loglevel INFO \
     --pidfile={PID_DIR}/celery-worker-transient.pid
