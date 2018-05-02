@@ -36,7 +36,7 @@ def get_service_context():
     return {
         'USER': USER,
         'GROUP': GROUP,
-        'LOGS_DIR': os.path.join(HOMO, LOGS_DIR),
+        'LOGS_DIR': os.path.join(HOME, LOGS_DIR),
         'PID_DIR': os.path.join(HOME, PID_DIR),
         'PROJECT_NAME': PROJECT_NAME,
         'PROJECT_DIR': os.path.join(HOME, PROJECT_NAME),
