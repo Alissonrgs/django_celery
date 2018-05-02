@@ -55,11 +55,7 @@ def update_service_file(service, context):
 @task(name='update-service-systemd')
 def update_service_systemd(**kwargs):
     """Create or update service files"""
-<<<<<<< HEAD
     context = get_service_context()
-=======
-    context = get_systemd_context()
->>>>>>> a794fe412df78d673ea21b7b2052bb162d172460
     context.update(kwargs)
 
     service_list = os.listdir('etc/systemd')
