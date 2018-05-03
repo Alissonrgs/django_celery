@@ -114,7 +114,7 @@ def setup():
     if exists(VENV_DIR):
         print("%s exists!" % VENV_DIR)
     else:
-        run('virtualenv -p /usr/bin/python3 .venv')
+        run('virtualenv -p /usr/bin/python3 %s' % VENV_NAME)
         
     if exists(PROJECT_DIR):
         print("%s exists!" % PROJECT_DIR)
