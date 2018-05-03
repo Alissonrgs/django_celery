@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 from __future__ import absolute_import, unicode_literals
 import os
 from celery.schedules import crontab
+from collections import OrderedDict
 from kombu import Exchange, Queue
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -66,21 +67,6 @@ CELERY_TASK_DEFAULT_ROUTING_KEY = 'normal'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TIMEZONE = 'UTC'
-
-
-# Celery Beat Settings
-
-CELERYBEAT_SCHEDULE = {
-    'periodic-task-01': {
-        'task': 'app.tasks.periodic_task_01',
-        'schedule': crontab(minute='*/1')
-    },
-    'periodic-task-02': {
-        'task': 'app.tasks.periodic_task_02',
-        'schedule': crontab(minute='*/2')
-    }
-}
-
 
 # Application definition
 
